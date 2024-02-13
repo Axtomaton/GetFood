@@ -76,5 +76,5 @@ async def end(ctx):
     human_readable_duration = str(datetime.timedelta(seconds=duration))
     await ctx.send(f"Session ended after {human_readable_duration}.")
 
-
-bot.run(BOT_TOKEN)
+if __name__ == "__main__":
+    bot.run(BOT_TOKEN)
