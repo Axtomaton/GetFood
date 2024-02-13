@@ -1,6 +1,8 @@
-### PREREQUISITES
+# PREREQUISITES
 
-# Please install the follow libraries with `pip install <name of library>`, alternatively you can use `pip -r install requirements.txt` 
+## Please install the follow libraries 
+You can do so with  `pip install <name of library>`.Alternatively you can use `pip -r install requirements.txt`
+
 Python (>3.7)
 Beautifulsoup4
 Requests
