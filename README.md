@@ -1,13 +1,16 @@
 # PREREQUISITES
 
-## Please install the follow libraries 
-You can do so with `pip install <name of library>`. Alternatively you can use `pip -r install requirements.txt`
+## Please Install The Follow Libraries 
+You can do so with `pip install <name of library>`. 
+<br></br>
+Alternatively you can use `pip -r install requirements.txt`
 
-Python (>3.7)
-Beautifulsoup4
-Requests
-tabulate
-discord
+Required Libraries: 
+- Python (>3.7)
+- Beautifulsoup4
+- Requests
+- tabulate
+- discord
 
 # How to run the CLI
 run `python getmyfood.py --BotToken=<Enter Bot Token> --ChannelID=<Enter Channel ID>`
