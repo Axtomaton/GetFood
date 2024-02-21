@@ -6,7 +6,7 @@ from dataclasses import dataclass
 import datetime
 import argparse 
 from tabulate import tabulate
-
+from table2ascii import table2ascii as t2a, PresetStyle
 
 parser = parser = argparse.ArgumentParser(description='Process some integers.')
 parser.add_argument('--BotToken',
@@ -57,13 +57,39 @@ async def start(ctx):
 async def food(ctx):
     page = requests.get(URL)
     soup = BeautifulSoup(page.content, "html.parser")
-    for chef in soup.find_all("div", class_="block block-block"):
-        food = [food.get_text().strip() for food in chef.find_all("div", class_="visitingchef-event")]
-        locations = [location.get_text().strip() for location in chef.find_all("div", class_="visitingchef-location")]
-    headers = ["FOOD", "LOCATION"]
-    data = list(zip(food, locations))
-    table = tabulate(data, headers=headers, tablefmt="pretty")
-    await ctx.send("```" + table + "```")
+    food_and_time = [data.get_text().strip() for data in soup.find_all("div", class_="visitingchef-event")]
+
+    foods = []
+    times = []
+    for info in food_and_time:
+        i = 0
+        l = len(info)
+        while i < l and not info[i].isdigit():
+            i += 1
+
+        if i < l:
+            food, time = info[:i - 1], info[i:]
+            time = time.strip()
+            food = food.strip()
+            time = time.lstrip("(")
+            time = time.rstrip(")")
+            if not time:
+                time = "N/A"
+        else:
+            food = info
+            time = "N/A"
+        foods.append(food)
+        times.append(time)
+
+    locations = [location.get_text().strip() for location in soup.find_all("div", class_="visitingchef-location")]
+    headers = ["FOOD", "TIME", "LOCATION"]
+    data = list(zip(foods, times, locations))
+    output = t2a (
+        header = headers,
+        body   = data,
+        style  = PresetStyle.thin_compact
+    )
+    await ctx.send("```" + output + "```")
     
 @bot.command()
 async def end(ctx):
